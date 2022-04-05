@@ -5,7 +5,7 @@ type Sizes = 'small' | 'medium'
 
 interface IInputProps {
   id?: string
-  required?: boolean
+  required: boolean | undefined
   autoFocus?: boolean
   disabled?: boolean
   label: string
@@ -14,7 +14,7 @@ interface IInputProps {
   autoComplete?: string
   className?: string
   value: any
-  color: any
+  color?: any
   onChange:
     | ((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => any)
     | undefined
