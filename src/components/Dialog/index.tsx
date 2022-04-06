@@ -7,44 +7,48 @@ import DialogTitle from '@mui/material/DialogTitle'
 import React, { FormEvent } from 'react'
 import { useValidateForm } from '../../hooks/useValidateForm'
 import { useAppContext } from '../../providers'
+import {
+  ADD_NEW_BOOK,
+  EDIT_NEW_BOOK,
+  LAST_NAME_ERROR_MSG,
+  NAME_ERROR_MSG,
+  PHONE_NUM_ERROR_MSG,
+} from '../../utils/constants'
 import Input from '../Input'
+
 
 const FormDialog: React.FC = () => {
   const {
     handlePhoneBookInsert,
+    handlePhoneBookUpdate,
     openDialog,
     handleShowDialog,
     personPhoneBook,
     handleFormChange,
+    action
   } = useAppContext()
-  /*const personPhoneBookForm: IPerson = {
-    id: personPhoneBook.id,
-    name: personPhoneBook?.name,
-    lastName: personPhoneBook?.lastName,
-    phoneNumber: personPhoneBook?.phoneNumber,
-  }*/
-  const formTitle =
-    personPhoneBook !== undefined ? 'New Phone Book' : 'Edit Phone Book'
+
+  const formTitle = action === 'insert' ? ADD_NEW_BOOK : EDIT_NEW_BOOK
 
   const { error, setError } = useValidateForm(personPhoneBook)
 
   function handleValidateForm() {
     let fields = { name: '', lastName: '', phoneNumber: '' }
-    fields.name = personPhoneBook.name ? '' : 'Name field can not be empty.'
-    fields.lastName = personPhoneBook.lastName
-      ? ''
-      : 'Last Name field can not be empty.'
-    fields.lastName = personPhoneBook.phoneNumber
-      ? ''
-      : 'Phone Number field can not be empty.'
+    fields.name = personPhoneBook.name ? '' : NAME_ERROR_MSG
+    fields.lastName = personPhoneBook.lastName ? '' : LAST_NAME_ERROR_MSG
+    fields.phoneNumber = personPhoneBook.phoneNumber ? '' : PHONE_NUM_ERROR_MSG
     setError({ ...fields })
     return Object.values(fields).every((ex) => ex === '')
   }
 
-  function handleAddOnePhoneBook(e: FormEvent) {
+  function handlePhoneBookSaveClick(e: FormEvent) {
     e.preventDefault()
     if (handleValidateForm()) {
-      handlePhoneBookInsert(personPhoneBook)
+      if (action === 'insert') {
+        handlePhoneBookInsert(personPhoneBook)
+      } else {
+        handlePhoneBookUpdate(personPhoneBook)
+      }
       handleShowDialog()
     }
   }
@@ -93,7 +97,7 @@ const FormDialog: React.FC = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleShowDialog}>Cancel</Button>
-        <Button onClick={handleAddOnePhoneBook}>Save</Button>
+        <Button onClick={handlePhoneBookSaveClick}>Save</Button>
       </DialogActions>
     </Dialog>
   )

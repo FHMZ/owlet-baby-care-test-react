@@ -2,23 +2,29 @@ import React, { createContext, useContext, useState } from 'react'
 import { IPerson } from '../models/person'
 
 interface IAppContext {
+  action: 'insert' | 'update'
+  setAction: (type: 'insert' | 'update') => void
   phoneBookList: IPerson[]
   setPhoneBookList: (data: IPerson[]) => void
   handlePhoneBookInsert: (person: IPerson) => void
+  handlePhoneBookUpdate: (person: IPerson) => void
   openDialog: boolean
   handleShowDialog: () => void
-  handlePhoneBookEdit: (person: IPerson) => void
-  handlePhoneBookDelete: (id: number) => void
+  handlePhoneBookEditClick: (data: IPerson) => void
+  handlePhoneBookDeleteClick: (id: number) => void
   personPhoneBook: IPerson
   setPersonPhoneBook: (data: IPerson) => void
   handleFormChange: (e: any) => any
   handleOpenPhoneBookDialog: () => void
+  handleSearchPhoneBook: (query: string) => void
 }
 
 const AppContext = createContext({} as IAppContext)
 
 export const AppProvider: React.FC = ({ children }) => {
+  const [action, setAction] = useState<'insert' | 'update'>('insert')
   const [phoneBookList, setPhoneBookList] = useState<IPerson[]>([])
+  const [phoneBookListSec, setPhoneBookListSec] = useState<IPerson[]>([])
   const [openDialog, setOpenDialog] = useState(false)
   const [personPhoneBook, setPersonPhoneBook] = useState<IPerson>({
     id: 0,
@@ -42,46 +48,72 @@ export const AppProvider: React.FC = ({ children }) => {
       lastName: '',
       phoneNumber: '',
     })
+    setAction('insert')
     handleShowDialog()
   }
 
-  function handlePhoneBookInsert(person: IPerson) {
-    let newItem = {
-      id: phoneBookList.length + 1,
-      name: person.name,
-      lastName: person.lastName,
-      phoneNumber: person.phoneNumber,
+  function handleSearchPhoneBook(query: string) {
+    const serchedList = phoneBookListSec.filter((el) => {
+      return (
+        el.name.toLowerCase().includes(query.toLowerCase()) ||
+        el.phoneNumber.toLowerCase().includes(query.toLowerCase())
+      )
+    })
+
+    if (serchedList.length !== 0) {
+      setPhoneBookList(serchedList)
+    } else {
+      setPhoneBookList(phoneBookListSec)
     }
-    setPhoneBookList([...phoneBookList, newItem])
+  }
+
+  function handlePhoneBookInsert(person: IPerson) {
+    person.id = phoneBookList.length
+    setPhoneBookList([...phoneBookList, person])
+    setPhoneBookListSec([...phoneBookListSec, person])
+  }
+
+  function handlePhoneBookUpdate(person: IPerson) {
+    const phoneBookListAux = Array.from(phoneBookList)
+    phoneBookListAux.splice(person.id, 1, person)
+    setPhoneBookList(phoneBookListAux)
+    setPhoneBookListSec(phoneBookListAux)
   }
 
   function handleShowDialog() {
     setOpenDialog(!openDialog)
   }
 
-  function handlePhoneBookEdit(person: IPerson) {
+  function handlePhoneBookEditClick(person: IPerson) {
     handleShowDialog()
-    setPhoneBookList((prev) =>
-      prev.map((item) => (item.id === person.id ? { ...item, person } : item))
-    )
+    setAction('update')
+    setPersonPhoneBook(person)
   }
 
-  function handlePhoneBookDelete(id: number) {
-    setPhoneBookList((prev) => prev.filter((item) => item.id !== id))
+  function handlePhoneBookDeleteClick(id: number) {
+    const phoneBookListAux = Array.from(phoneBookList)
+    phoneBookListAux.splice(id, 1)
+    phoneBookListAux.map((item, i) => (item.id = i))
+    setPhoneBookList(phoneBookListAux)
+    setPhoneBookListSec(phoneBookListAux)
   }
 
   const values = {
+    action,
+    setAction,
     phoneBookList,
     setPhoneBookList,
     handlePhoneBookInsert,
+    handlePhoneBookUpdate,
     openDialog,
     handleShowDialog,
-    handlePhoneBookEdit,
-    handlePhoneBookDelete,
+    handlePhoneBookEditClick,
+    handlePhoneBookDeleteClick,
     personPhoneBook,
     setPersonPhoneBook,
     handleFormChange,
     handleOpenPhoneBookDialog,
+    handleSearchPhoneBook,
   }
 
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>

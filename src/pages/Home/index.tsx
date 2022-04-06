@@ -1,4 +1,4 @@
-import { Button, Grid, List, Toolbar, Tooltip } from '@mui/material'
+import { Grid, List, Toolbar } from '@mui/material'
 import React from 'react'
 import FormDialog from '../../components/Dialog'
 import Header from '../../components/Header'
@@ -7,7 +7,7 @@ import { useAppContext } from '../../providers'
 import { StyledContainer, StyledTitle } from './styles'
 
 const Home: React.FC = () => {
-  const { phoneBookList, handleOpenPhoneBookDialog } = useAppContext()
+  const { phoneBookList } = useAppContext()
 
   return (
     <div>
@@ -26,19 +26,8 @@ const Home: React.FC = () => {
             <>
               <Grid container justifyContent="center">
                 <StyledTitle variant="h6">
-                  Phone Book list is empty...
+                  No Phone Book was found...
                 </StyledTitle>
-              </Grid>
-              <Grid container justifyContent="center">
-                <Tooltip title="Add New Phone Book">
-                  <Button
-                    variant="text"
-                    size="medium"
-                    onClick={handleOpenPhoneBookDialog}
-                  >
-                    Add New
-                  </Button>
-                </Tooltip>
               </Grid>
             </>
           )}

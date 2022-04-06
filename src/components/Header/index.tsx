@@ -17,7 +17,7 @@ import {
 } from './styles'
 
 const Header = () => {
-  const { handleOpenPhoneBookDialog } = useAppContext()
+  const { handleOpenPhoneBookDialog, handleSearchPhoneBook } = useAppContext()
 
   return (
     <MuiAppBar>
@@ -32,6 +32,7 @@ const Header = () => {
             <SearchIcon />
           </StyledSearchIconWrapper>
           <StyledInputBase
+            onChange={(e) => handleSearchPhoneBook(e.target.value)}
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search' }}
           />

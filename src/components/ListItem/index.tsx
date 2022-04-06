@@ -14,7 +14,8 @@ interface IPersonProps {
 
 const PhoneBookListItem: React.FC<IPersonProps> = ({ person }) => {
   const fullName = `${person.name} ${person.lastName}`
-  const { handlePhoneBookEdit, handlePhoneBookDelete } = useAppContext()
+  const { handlePhoneBookEditClick, handlePhoneBookDeleteClick } =
+    useAppContext()
 
   return (
     <>
@@ -24,13 +25,13 @@ const PhoneBookListItem: React.FC<IPersonProps> = ({ person }) => {
           <>
             <IconButton
               edge="start"
-              onClick={() => handlePhoneBookEdit(person)}
+              onClick={() => handlePhoneBookEditClick(person)}
             >
               <EditOutlinedIcon />
             </IconButton>
             <IconButton
               edge="end"
-              onClick={() => handlePhoneBookDelete(person.id)}
+              onClick={() => handlePhoneBookDeleteClick(person.id)}
             >
               <DeleteOutlineOutlinedIcon />
             </IconButton>
