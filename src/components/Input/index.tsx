@@ -5,9 +5,8 @@ type Sizes = 'small' | 'medium'
 
 interface IInputProps {
   id?: string
-  required: boolean | undefined
+  required?: boolean
   autoFocus?: boolean
-  disabled?: boolean
   label: string
   name: string
   type?: string
@@ -22,13 +21,11 @@ interface IInputProps {
   variant: any
   endAdornment?: React.ReactNode
   error?: any
-  children?: React.ReactNode
 }
 
 const Input: React.FC<IInputProps> = ({
   required,
   autoFocus,
-  disabled,
   id,
   label,
   name,
@@ -48,7 +45,6 @@ const Input: React.FC<IInputProps> = ({
       id={id}
       name={name}
       required={required}
-      disabled={disabled}
       autoFocus={autoFocus}
       fullWidth
       margin="normal"

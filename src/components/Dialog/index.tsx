@@ -6,33 +6,35 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import React, { FormEvent } from 'react'
 import { useValidateForm } from '../../hooks/useValidateForm'
-import { IPerson } from '../../models/person'
 import { useAppContext } from '../../providers'
 import Input from '../Input'
 
-interface IDialogProps {
-  onShowDialog: () => any
-  open: boolean
-  person?: IPerson
-}
+const FormDialog: React.FC = () => {
+  const {
+    handlePhoneBookInsert,
+    openDialog,
+    handleShowDialog,
+    personPhoneBook,
+    handleFormChange,
+  } = useAppContext()
+  /*const personPhoneBookForm: IPerson = {
+    id: personPhoneBook.id,
+    name: personPhoneBook?.name,
+    lastName: personPhoneBook?.lastName,
+    phoneNumber: personPhoneBook?.phoneNumber,
+  }*/
+  const formTitle =
+    personPhoneBook !== undefined ? 'New Phone Book' : 'Edit Phone Book'
 
-const FormDialog: React.FC<IDialogProps> = ({ person }) => {
-  const { handleAddPhoneBook, openDialog, handleShowDialog } = useAppContext()
-
-  const formTitle = person !== undefined ? 'New Phone Book' : 'Edit Phone Book'
-  const personPhoneBook = {
-    name: person?.name,
-    lastName: person?.lastName,
-    phoneNumber: person?.phoneNumber,
-  }
-  const { form, error, setError, onFormChange } =
-    useValidateForm(personPhoneBook)
+  const { error, setError } = useValidateForm(personPhoneBook)
 
   function handleValidateForm() {
     let fields = { name: '', lastName: '', phoneNumber: '' }
-    fields.name = form.name ? '' : 'Name field can not be empty.'
-    fields.lastName = form.lastName ? '' : 'Last Name field can not be empty.'
-    fields.lastName = form.phoneNumber
+    fields.name = personPhoneBook.name ? '' : 'Name field can not be empty.'
+    fields.lastName = personPhoneBook.lastName
+      ? ''
+      : 'Last Name field can not be empty.'
+    fields.lastName = personPhoneBook.phoneNumber
       ? ''
       : 'Phone Number field can not be empty.'
     setError({ ...fields })
@@ -42,7 +44,7 @@ const FormDialog: React.FC<IDialogProps> = ({ person }) => {
   function handleAddOnePhoneBook(e: FormEvent) {
     e.preventDefault()
     if (handleValidateForm()) {
-      handleAddPhoneBook(form)
+      handlePhoneBookInsert(personPhoneBook)
       handleShowDialog()
     }
   }
@@ -55,10 +57,10 @@ const FormDialog: React.FC<IDialogProps> = ({ person }) => {
           Please fill all the text fields and press save to book a new Phone.
         </DialogContentText>
         <Input
+          autoFocus={true}
           required={true}
           value={personPhoneBook.name}
-          onChange={onFormChange}
-          autoFocus
+          onChange={handleFormChange}
           id="personName"
           label="Name"
           name="name"
@@ -69,7 +71,7 @@ const FormDialog: React.FC<IDialogProps> = ({ person }) => {
         <Input
           required={true}
           value={personPhoneBook.lastName}
-          onChange={onFormChange}
+          onChange={handleFormChange}
           id="personLastName"
           label="Last Name"
           name="lastName"
@@ -80,7 +82,7 @@ const FormDialog: React.FC<IDialogProps> = ({ person }) => {
         <Input
           required={true}
           value={personPhoneBook.phoneNumber}
-          onChange={onFormChange}
+          onChange={handleFormChange}
           id="personPhoneNumber"
           label="Phone Number"
           name="phoneNumber"

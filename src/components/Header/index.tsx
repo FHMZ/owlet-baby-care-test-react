@@ -17,7 +17,7 @@ import {
 } from './styles'
 
 const Header = () => {
-  const { handleShowDialog, openDialog } = useAppContext()
+  const { handleOpenPhoneBookDialog } = useAppContext()
 
   return (
     <MuiAppBar>
@@ -42,14 +42,14 @@ const Header = () => {
               size="large"
               edge="end"
               color="inherit"
-              onClick={handleShowDialog}
+              onClick={handleOpenPhoneBookDialog}
             >
               <AddIcCallOutlinedIcon />
             </IconButton>
           </Tooltip>
         </Box>
       </Toolbar>
-      <FormDialog onShowDialog={handleShowDialog} open={openDialog} />
+      <FormDialog />
     </MuiAppBar>
   )
 }

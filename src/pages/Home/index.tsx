@@ -7,7 +7,7 @@ import { useAppContext } from '../../providers'
 import { StyledContainer, StyledTitle } from './styles'
 
 const Home: React.FC = () => {
-  const { phoneBookList, openDialog, handleShowDialog } = useAppContext()
+  const { phoneBookList, handleOpenPhoneBookDialog } = useAppContext()
 
   return (
     <div>
@@ -34,7 +34,7 @@ const Home: React.FC = () => {
                   <Button
                     variant="text"
                     size="medium"
-                    onClick={handleShowDialog}
+                    onClick={handleOpenPhoneBookDialog}
                   >
                     Add New
                   </Button>
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
           )}
         </List>
       </StyledContainer>
-      <FormDialog onShowDialog={handleShowDialog} open={openDialog} />
+      <FormDialog />
     </div>
   )
 }
