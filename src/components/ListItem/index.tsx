@@ -19,7 +19,6 @@ const PhoneBookListItem: React.FC<IPersonProps> = ({ person }) => {
 
   return (
     <>
-      <Divider variant="inset" component="li" />
       <ListItem
         secondaryAction={
           <>

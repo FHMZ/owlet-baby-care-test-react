@@ -69,7 +69,6 @@ const FormDialog: React.FC = () => {
           label="Name"
           name="name"
           type="text"
-          variant="standard"
           error={error.name}
         />
         <Input
@@ -80,7 +79,6 @@ const FormDialog: React.FC = () => {
           label="Last Name"
           name="lastName"
           type="text"
-          variant="standard"
           error={error.lastName}
         />
         <Input
@@ -91,7 +89,6 @@ const FormDialog: React.FC = () => {
           label="Phone Number"
           name="phoneNumber"
           type="text"
-          variant="standard"
           error={error.phoneNumber}
         />
       </DialogContent>

@@ -65,6 +65,7 @@ export const AppProvider: React.FC = ({ children }) => {
     } else {
       setPhoneBookList(phoneBookListSec)
     }
+    phoneBookList.map((item, i) => (item.id = i))
   }
 
   function handlePhoneBookInsert(person: IPerson) {

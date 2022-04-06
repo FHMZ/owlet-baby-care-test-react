@@ -57,9 +57,7 @@ const LoginForm: React.FC = () => {
         required={true}
         autoFocus={true}
         value={form.userName}
-        variant="filled"
         onChange={onFormChange}
-        color="success"
         error={error.userName}
       />
       <Input
@@ -69,7 +67,6 @@ const LoginForm: React.FC = () => {
         required={true}
         type={isFieldText}
         value={form.userPassword}
-        variant="filled"
         onChange={onFormChange}
         endAdornment={
           <PasswordIconButton
@@ -77,7 +74,6 @@ const LoginForm: React.FC = () => {
             isVisible={isPasswordVisible}
           />
         }
-        color="success"
         error={error.userPassword}
       />
       <StyledLoginButton

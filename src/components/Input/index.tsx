@@ -1,25 +1,18 @@
 import MuiInput from '@mui/material/TextField'
 import React, { ChangeEvent } from 'react'
 
-type Sizes = 'small' | 'medium'
-
 interface IInputProps {
   id?: string
   required?: boolean
   autoFocus?: boolean
-  label: string
-  name: string
-  type?: string
-  autoComplete?: string
-  className?: string
-  value: any
-  color?: any
+  label?: string
+  name?: string
+  value?: any
   onChange:
     | ((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => any)
     | undefined
-  size?: Sizes
-  variant: any
   endAdornment?: React.ReactNode
+  type?: string
   error?: any
 }
 
@@ -29,40 +22,29 @@ const Input: React.FC<IInputProps> = ({
   id,
   label,
   name,
-  type,
-  variant,
-  autoComplete,
-  className,
   value,
-  color,
   onChange,
-  size,
+  type,
   endAdornment,
   error,
-}) => {
-  return (
-    <MuiInput
-      id={id}
-      name={name}
-      required={required}
-      autoFocus={autoFocus}
-      fullWidth
-      margin="normal"
-      label={label}
-      type={type}
-      variant={variant}
-      autoComplete={autoComplete}
-      className={className}
-      value={value}
-      color={color}
-      size={size}
-      onChange={onChange}
-      InputProps={{
-        endAdornment: endAdornment === undefined ? undefined : endAdornment,
-      }}
-      {...(error && { error: true, helperText: error })}
-    />
-  )
-}
+}) => (
+  <MuiInput
+    id={id}
+    name={name}
+    required={required}
+    autoFocus={autoFocus}
+    fullWidth
+    margin="normal"
+    label={label}
+    variant="standard"
+    value={value}
+    type={type}
+    onChange={onChange}
+    InputProps={{
+      endAdornment: endAdornment === undefined ? undefined : endAdornment,
+    }}
+    {...(error && { error: true, helperText: error })}
+  />
+)
 
 export default Input

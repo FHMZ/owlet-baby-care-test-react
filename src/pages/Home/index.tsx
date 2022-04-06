@@ -1,19 +1,41 @@
-import { Grid, List, Toolbar } from '@mui/material'
-import React from 'react'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
+import { Grid, InputAdornment, List, Toolbar } from '@mui/material'
+import React, { useState } from 'react'
 import FormDialog from '../../components/Dialog'
 import Header from '../../components/Header'
 import PhoneBookListItem from '../../components/ListItem'
 import { useAppContext } from '../../providers'
-import { StyledContainer, StyledTitle } from './styles'
+import { StyledContainer, StyledTitle, StyledSearchWrapper } from './styles'
+import InputSearch from '../../components/Input'
 
 const Home: React.FC = () => {
-  const { phoneBookList } = useAppContext()
+  const { phoneBookList, handleSearchPhoneBook } = useAppContext()
+  const [searchInput, setSearchInput] = useState('')
+
+  function handleSearch(value: string) {
+    setSearchInput(value)
+    handleSearchPhoneBook(value)
+  }
 
   return (
     <div>
       <Header />
       <Toolbar />
       <StyledContainer>
+        <StyledSearchWrapper>
+          <InputSearch
+            autoFocus={true}
+            label="Search"
+            value={searchInput}
+            onChange={(e) => handleSearch(e.target.value)}
+            type="text"
+            endAdornment={
+              <InputAdornment position="end">
+                <SearchOutlinedIcon />
+              </InputAdornment>
+            }
+          />
+        </StyledSearchWrapper>
         <StyledTitle variant="h6" color="inherit">
           Phone Books
         </StyledTitle>
