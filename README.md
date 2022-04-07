@@ -27,4 +27,6 @@ To run the development server:
 3 - docker-compose build (to build docker-compose)
 
 4 - docker-compose run app_owlet_1
+
+Open (http://localhost:3000/login) with your browser to see the result.
 ```
