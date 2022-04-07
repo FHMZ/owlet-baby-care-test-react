@@ -17,17 +17,17 @@ interface IRoute {
 const routes: IRoute[] = [
   {
     id: 1,
-    path: '/login', //environment.loginUrl,
+    path: '/login',
     component: LoginPage,
   },
   {
     id: 2,
-    path: '/home', //environment.kdsCardUrl,
+    path: '/home',
     component: HomePage,
   },
   {
     id: 3,
-    path: '/', //environment.kdsCardUrl,
+    path: '/',
     component: LoginPage,
   },
 ]

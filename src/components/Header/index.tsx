@@ -9,9 +9,16 @@ import * as React from 'react'
 import FormDialog from '../../components/Dialog'
 import { useAppContext } from '../../providers'
 import { StyledChildFriendlyOutlinedIcon } from './styles'
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import { useHistory } from 'react-router-dom'
 
 const Header = () => {
   const { handleOpenDialog } = useAppContext()
+  const history = useHistory()
+
+  function handleLogoutApp() {
+    history.push('/login')
+  }
 
   return (
     <MuiAppBar>
@@ -23,8 +30,22 @@ const Header = () => {
         <Box sx={{ flexGrow: 1 }} />
         <Box>
           <Tooltip title="Add New Phone Book">
-            <IconButton size="medium" color="inherit" onClick={handleOpenDialog}>
+            <IconButton
+              edge="start"
+              size="medium"
+              color="inherit"
+              onClick={handleOpenDialog}
+            >
               <AddIcCallOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Logout">
+            <IconButton
+              size="medium"
+              color="inherit"
+              onClick={handleLogoutApp}
+            >
+              <LogoutOutlinedIcon />
             </IconButton>
           </Tooltip>
         </Box>

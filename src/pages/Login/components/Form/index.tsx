@@ -4,7 +4,6 @@ import Input from '../../../../components/Input'
 import { useShowPassword } from '../../../../hooks/useShowPassword'
 import { useValidateForm } from '../../../../hooks/useValidateForm'
 import { ILogin } from '../../../../models/login'
-// import { useLoginProvider } from '../../../../providers/KdsProvider'
 import PasswordIconButton from '../IconButton'
 import { StyledForm, StyledLoginButton } from './styles'
 
@@ -16,7 +15,6 @@ const initForm: ILogin = {
 const LoginForm: React.FC = () => {
   const { form, error, setError, onFormChange } = useValidateForm(initForm)
   const { isPasswordVisible, onPasswordVisible } = useShowPassword()
-  // const { setKdsProps } = useLoginProvider()
 
   const history = useHistory()
   const isFieldText = isPasswordVisible ? 'text' : 'password'
