@@ -1,4 +1,4 @@
-## Getting Started
+## Runnig locally with Yarn
 
 First, checkout the develop branch to get all the code.
 
@@ -13,7 +13,7 @@ Open (http://localhost:3000/login) with your browser to see the result.
 ```
 ---------------OR ------------------
 
-## Getting Started with Docker
+## Runnig locally with Docker
 
 First, checkout the develop branch to get all the code.
 
