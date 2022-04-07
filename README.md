@@ -10,6 +10,9 @@ To run the local server:
 2 - yarn start (to up the project)
 
 Open (http://localhost:3000/login) with your browser to see the result.
+
+User: Admin
+Password: Admin
 ```
 ---------------OR ------------------
 
@@ -29,4 +32,7 @@ To run the local server:
 4 - docker-compose run app_owlet_1
 
 Open (http://localhost:3000/login) with your browser to see the result.
+
+User: Admin
+Password: Admin
 ```
