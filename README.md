@@ -36,3 +36,6 @@ Open (http://localhost:3000/login) with your browser to see the result.
 User: Admin
 Password: Admin
 ```
+Obs:
+To enter with a new phone book, the top right button should be clicked and then will get the option.
+The system also give the edit and delete option.
