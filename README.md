@@ -25,7 +25,7 @@ To run the local server:
 ```Docker
 1 - yarn (To install node_modules)
 
-2 - docker-compose -f docker-compose.dev.yml up (To Up the app)
+2 - docker run -it -p 3001:3001 app-owlet-dev (To Up the app)
 
 Open (http://localhost:3000/login) with your browser to see the result.
 
