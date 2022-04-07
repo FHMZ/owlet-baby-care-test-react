@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { ChangeEvent, createContext, useContext, useState } from 'react'
 import { IPerson } from '../models/person'
 
 interface IAppContext {
@@ -36,8 +36,13 @@ export const AppProvider: React.FC = ({ children }) => {
   const [openDialog, setOpenDialog] = useState(false)
   const [personPhoneBook, setPersonPhoneBook] = useState<IPerson>(initForm)
 
-  /**@Document This */
-  function handleFormChange(e: any) {
+  /**
+   * @param e - A function that is called every time the some form field change.
+   * @param {e} e - The event from field.
+   */
+  function handleFormChange(
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
     setPersonPhoneBook({
       ...personPhoneBook,
       [e.target.name]: e.target.value,
