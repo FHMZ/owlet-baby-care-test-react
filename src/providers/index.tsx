@@ -59,6 +59,7 @@ export const AppProvider: React.FC = ({ children }) => {
   function handlePhoneBookInsert(person: IPerson) {
     person.id = phoneBookListSec.length
     setPhoneBookList([...phoneBookList, person])
+    /** @Document updating auxiliar list*/
     setPhoneBookListSec([...phoneBookListSec, person])
   }
 
@@ -66,6 +67,7 @@ export const AppProvider: React.FC = ({ children }) => {
     let phoneBookListAux = Array.from(phoneBookList)
     phoneBookListAux.splice(listIndex, 1, person)
     setPhoneBookList(phoneBookListAux)
+    /** @Document updating auxiliar list*/
     phoneBookListAux = Array.from(phoneBookListSec)
     phoneBookListAux.splice(person.id, 1, person)
     setPhoneBookListSec(phoneBookListAux)
@@ -87,6 +89,7 @@ export const AppProvider: React.FC = ({ children }) => {
     phoneBookListAux.splice(index, 1)
     phoneBookListAux.map((item, i) => (item.id = i))
     setPhoneBookList(phoneBookListAux)
+    /** @Document updating auxiliar list*/
     phoneBookListAux = Array.from(phoneBookListSec)
     phoneBookListAux.splice(id, 1)
     phoneBookListAux.map((item, i) => (item.id = i))
