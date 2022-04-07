@@ -1,14 +1,18 @@
-# NODE 12x BASE IMAGE
-FROM node:13.12.0-alpine
+FROM node:lts-alpine
 
-#WORKING DIRECTORY
+# Add a work directory
 WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-# INSTALL APP DEPENDENCIES
+# Cache and Install dependencies
 COPY package.json ./
+COPY yarn.lock ./
 
-RUN npm install
+RUN yarn
+# Copy app files
 COPY . ./
-CMD ["npm", "start"]
+# Expose port
+EXPOSE 3000
+# Start the app
+CMD [ "yarn", "start" ]
