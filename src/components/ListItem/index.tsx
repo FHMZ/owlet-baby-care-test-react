@@ -9,29 +9,23 @@ import { useAppContext } from '../../providers'
 import ListItemAvatar from '../ListItemAvatar'
 
 interface IPersonProps {
+  index: number
   person: IPerson
 }
 
-const PhoneBookListItem: React.FC<IPersonProps> = ({ person }) => {
+const PhoneBookListItem: React.FC<IPersonProps> = ({ index, person }) => {
   const fullName = `${person.name} ${person.lastName}`
-  const { handlePhoneBookEditClick, handlePhoneBookDeleteClick } =
-    useAppContext()
+  const { handleEditClick, handleDeleteClick } = useAppContext()
 
   return (
     <>
       <ListItem
         secondaryAction={
           <>
-            <IconButton
-              edge="start"
-              onClick={() => handlePhoneBookEditClick(person)}
-            >
+            <IconButton edge="start" onClick={() => handleEditClick(index, person)}>
               <EditOutlinedIcon />
             </IconButton>
-            <IconButton
-              edge="end"
-              onClick={() => handlePhoneBookDeleteClick(person.id)}
-            >
+            <IconButton edge="end" onClick={() => handleDeleteClick(index, person.id)}>
               <DeleteOutlineOutlinedIcon />
             </IconButton>
           </>

@@ -42,7 +42,7 @@ const Home: React.FC = () => {
         <List>
           {phoneBookList.length > 0 ? (
             phoneBookList.map((person, i) => (
-              <PhoneBookListItem key={i} person={person} />
+              <PhoneBookListItem key={i} index={i} person={person} />
             ))
           ) : (
             <>

@@ -11,7 +11,7 @@ import { useAppContext } from '../../providers'
 import { StyledChildFriendlyOutlinedIcon } from './styles'
 
 const Header = () => {
-  const { handleOpenPhoneBookDialog } = useAppContext()
+  const { handleOpenDialog } = useAppContext()
 
   return (
     <MuiAppBar>
@@ -23,11 +23,7 @@ const Header = () => {
         <Box sx={{ flexGrow: 1 }} />
         <Box>
           <Tooltip title="Add New Phone Book">
-            <IconButton
-              size="large"
-              color="inherit"
-              onClick={handleOpenPhoneBookDialog}
-            >
+            <IconButton size="medium" color="inherit" onClick={handleOpenDialog}>
               <AddIcCallOutlinedIcon />
             </IconButton>
           </Tooltip>

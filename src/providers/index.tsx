@@ -5,18 +5,25 @@ interface IAppContext {
   action: 'insert' | 'update'
   setAction: (type: 'insert' | 'update') => void
   phoneBookList: IPerson[]
-  setPhoneBookList: (data: IPerson[]) => void
+  setPhoneBookList: (persons: IPerson[]) => void
   handlePhoneBookInsert: (person: IPerson) => void
   handlePhoneBookUpdate: (person: IPerson) => void
   openDialog: boolean
   handleShowDialog: () => void
-  handlePhoneBookEditClick: (data: IPerson) => void
-  handlePhoneBookDeleteClick: (id: number) => void
+  handleEditClick: (index: number, person: IPerson) => void
+  handleDeleteClick: (index: number, id: number) => void
   personPhoneBook: IPerson
-  setPersonPhoneBook: (data: IPerson) => void
+  setPersonPhoneBook: (person: IPerson) => void
   handleFormChange: (e: any) => any
-  handleOpenPhoneBookDialog: () => void
+  handleOpenDialog: () => void
   handleSearchPhoneBook: (query: string) => void
+}
+
+const initForm: IPerson = {
+  id: 0,
+  name: '',
+  lastName: '',
+  phoneNumber: '',
 }
 
 const AppContext = createContext({} as IAppContext)
@@ -24,14 +31,10 @@ const AppContext = createContext({} as IAppContext)
 export const AppProvider: React.FC = ({ children }) => {
   const [action, setAction] = useState<'insert' | 'update'>('insert')
   const [phoneBookList, setPhoneBookList] = useState<IPerson[]>([])
+  const [listIndex, setListIndex] = useState(0)
   const [phoneBookListSec, setPhoneBookListSec] = useState<IPerson[]>([])
   const [openDialog, setOpenDialog] = useState(false)
-  const [personPhoneBook, setPersonPhoneBook] = useState<IPerson>({
-    id: 0,
-    name: '',
-    lastName: '',
-    phoneNumber: '',
-  })
+  const [personPhoneBook, setPersonPhoneBook] = useState<IPerson>(initForm)
 
   function handleFormChange(e: any) {
     setPersonPhoneBook({
@@ -40,14 +43,8 @@ export const AppProvider: React.FC = ({ children }) => {
     })
   }
 
-  function handleOpenPhoneBookDialog() {
-    setPersonPhoneBook({
-      ...personPhoneBook,
-      id: 0,
-      name: '',
-      lastName: '',
-      phoneNumber: '',
-    })
+  function handleOpenDialog() {
+    setPersonPhoneBook(initForm)
     setAction('insert')
     handleShowDialog()
   }
@@ -65,19 +62,20 @@ export const AppProvider: React.FC = ({ children }) => {
     } else {
       setPhoneBookList(phoneBookListSec)
     }
-    phoneBookList.map((item, i) => (item.id = i))
   }
 
   function handlePhoneBookInsert(person: IPerson) {
-    person.id = phoneBookList.length
+    person.id = phoneBookListSec.length
     setPhoneBookList([...phoneBookList, person])
     setPhoneBookListSec([...phoneBookListSec, person])
   }
 
   function handlePhoneBookUpdate(person: IPerson) {
-    const phoneBookListAux = Array.from(phoneBookList)
-    phoneBookListAux.splice(person.id, 1, person)
+    let phoneBookListAux = Array.from(phoneBookList)
+    phoneBookListAux.splice(listIndex, 1, person)
     setPhoneBookList(phoneBookListAux)
+    phoneBookListAux = Array.from(phoneBookListSec)
+    phoneBookListAux.splice(person.id, 1, person)
     setPhoneBookListSec(phoneBookListAux)
   }
 
@@ -85,17 +83,21 @@ export const AppProvider: React.FC = ({ children }) => {
     setOpenDialog(!openDialog)
   }
 
-  function handlePhoneBookEditClick(person: IPerson) {
+  function handleEditClick(index: number, person: IPerson) {
     handleShowDialog()
     setAction('update')
+    setListIndex(index)
     setPersonPhoneBook(person)
   }
 
-  function handlePhoneBookDeleteClick(id: number) {
-    const phoneBookListAux = Array.from(phoneBookList)
-    phoneBookListAux.splice(id, 1)
+  function handleDeleteClick(index: number, id: number) {
+    let phoneBookListAux = Array.from(phoneBookList)
+    phoneBookListAux.splice(index, 1)
     phoneBookListAux.map((item, i) => (item.id = i))
     setPhoneBookList(phoneBookListAux)
+    phoneBookListAux = Array.from(phoneBookListSec)
+    phoneBookListAux.splice(id, 1)
+    phoneBookListAux.map((item, i) => (item.id = i))
     setPhoneBookListSec(phoneBookListAux)
   }
 
@@ -108,12 +110,12 @@ export const AppProvider: React.FC = ({ children }) => {
     handlePhoneBookUpdate,
     openDialog,
     handleShowDialog,
-    handlePhoneBookEditClick,
-    handlePhoneBookDeleteClick,
+    handleEditClick,
+    handleDeleteClick,
     personPhoneBook,
     setPersonPhoneBook,
     handleFormChange,
-    handleOpenPhoneBookDialog,
+    handleOpenDialog,
     handleSearchPhoneBook,
   }
 
