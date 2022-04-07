@@ -1,4 +1,4 @@
-import React, { ChangeEvent, createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { IPerson } from '../models/person'
 
 interface IAppContext {
@@ -14,7 +14,6 @@ interface IAppContext {
   handleDeleteClick: (index: number, id: number) => void
   personPhoneBook: IPerson
   setPersonPhoneBook: (person: IPerson) => void
-  handleFormChange: (e: any) => any
   handleOpenDialog: () => void
   handleSearchPhoneBook: (query: string) => void
 }
@@ -35,19 +34,6 @@ export const AppProvider: React.FC = ({ children }) => {
   const [phoneBookListSec, setPhoneBookListSec] = useState<IPerson[]>([])
   const [openDialog, setOpenDialog] = useState(false)
   const [personPhoneBook, setPersonPhoneBook] = useState<IPerson>(initForm)
-
-  /**
-   * @param e - A function that is called every time the some form field change.
-   * @param {e} e - The event from field.
-   */
-  function handleFormChange(
-    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) {
-    setPersonPhoneBook({
-      ...personPhoneBook,
-      [e.target.name]: e.target.value,
-    })
-  }
 
   function handleOpenDialog() {
     setPersonPhoneBook(initForm)
@@ -120,7 +106,6 @@ export const AppProvider: React.FC = ({ children }) => {
     handleDeleteClick,
     personPhoneBook,
     setPersonPhoneBook,
-    handleFormChange,
     handleOpenDialog,
     handleSearchPhoneBook,
   }

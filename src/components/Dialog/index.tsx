@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import React, { FormEvent } from 'react'
+import React, { ChangeEvent, FormEvent } from 'react'
 import { useValidateForm } from '../../hooks/useValidateForm'
 import { useAppContext } from '../../providers'
 import {
@@ -16,7 +16,6 @@ import {
 } from '../../utils/constants'
 import Input from '../Input'
 
-
 const FormDialog: React.FC = () => {
   const {
     handlePhoneBookInsert,
@@ -24,13 +23,26 @@ const FormDialog: React.FC = () => {
     openDialog,
     handleShowDialog,
     personPhoneBook,
-    handleFormChange,
-    action
+    setPersonPhoneBook,
+    action,
   } = useAppContext()
 
   const formTitle = action === 'insert' ? ADD_NEW_BOOK : EDIT_NEW_BOOK
 
   const { error, setError } = useValidateForm(personPhoneBook)
+
+  /**
+   * @param e - A function that is called every time the some form field change.
+   * @param {e} e - The event from field.
+   */
+  function handleFormChange(
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) {
+    setPersonPhoneBook({
+      ...personPhoneBook,
+      [e.target.name]: e.target.value,
+    })
+  }
 
   function handleValidateForm() {
     let fields = { name: '', lastName: '', phoneNumber: '' }
