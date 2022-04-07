@@ -36,6 +36,7 @@ export const AppProvider: React.FC = ({ children }) => {
   const [openDialog, setOpenDialog] = useState(false)
   const [personPhoneBook, setPersonPhoneBook] = useState<IPerson>(initForm)
 
+  /**@Document This */
   function handleFormChange(e: any) {
     setPersonPhoneBook({
       ...personPhoneBook,
